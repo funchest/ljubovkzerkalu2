@@ -2,10 +2,8 @@
 const app = express();
 const mongoose = require("mongoose");
 const bodyParser=require("body-parser");
-const html = require("html");
-const path = require('path');
+
 const nodeMailer = require('nodemailer');
-var sms = require('free-mobile-sms-api');
 const Nexmo = require('nexmo');
 const nexmo = new Nexmo({
     apiKey: '6c044964',
