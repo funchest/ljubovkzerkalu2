@@ -1,4 +1,4 @@
-const express=require("express");
+﻿const express=require("express");
 const app = express();
 const mongoose = require("mongoose");
 const bodyParser=require("body-parser");
@@ -11,6 +11,7 @@ const nexmo = new Nexmo({
     apiKey: '6c044964',
     apiSecret: 'VFdWOiffsqtFl911'
 })
+var port = process.env.PORT || 5000;
 
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
@@ -380,7 +381,7 @@ app.get("/orders/:id",(req,res)=>{
 
 
 
-app.listen(5000,()=>{
+app.listen(port,()=>{
     console.log("running");
 });
 
