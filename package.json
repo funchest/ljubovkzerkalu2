@@ -25,7 +25,8 @@
   "html" : "*",
   "nodemailer": "*",
   "path": "*",
-  "nexmo": "*"
+  "nexmo": "*",
+  "ejs" : "*"
   },
   
 "author": "Alexander Fomitsjov",
