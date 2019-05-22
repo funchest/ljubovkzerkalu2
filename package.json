@@ -1,15 +1,33 @@
 {
-  "name": "website",
+  "name": "ljubovkzerkalu",
+
   "version": "1.0.0",
-  "description": "",
-  "main": "services.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start" : "node main.js"
-  },
-  "author": "Alexander Fomitsjov",
-  "license": "ISC",
-  "engines": {
+
+  "description": "beauty salon",
+ 
+ "main": "main.js",
+
+  "scripts": 
+{
+    
+	"test": "echo \"Error: no test specified\" && exit 1",
+   
+ "start": "node main.js"
+ 
+ },
+  
+"author": "Alexander Fomitsjov",
+ 
+ "license": "ISC",
+  
+"engines": {
     "node": "10.x"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/funchest/ljubovkzerkalu"
+  },
+  "keywords": [
+    "plswork"
+  ]
 }
