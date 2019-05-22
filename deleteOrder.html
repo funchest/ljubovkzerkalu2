@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Любовь к Зеркалу</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+
+
+
+
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/style.css">
+
+
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <style>
+
+    </style>
+
+
+</head>
+<body>
+<div class="site-wrap">
+    <div class="site-navbar bg-white py-2">
+
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="logo">
+                    <div class="site-logo">
+                        <a href="/" class="js-logo-clone">Любовь<span style="color:red"> к</span> Зеркалу</a>
+                    </div>
+                </div>
+                <div class="main-nav d-none d-lg-block">
+                    <nav class="site-navigation text-right text-md-center" role="navigation">
+                        <ul class="site-menu js-clone-nav d-none d-lg-block">
+                            <li class="has-children active">
+                                <a href="index.html">Услуги</a>
+                                <ul class="dropdown">
+                                    <li><a href="/formen">Мужчины</a></li>
+                                    <li><a href="/forwomen">Женьщины</a></li>
+                                    <li><a href="/forkids">Подростки</a></li>
+                                </ul>
+                            </li>
+
+
+                            <li><a href="../contact.html">Контакты</a></li>
+                        </ul>
+                    </nav>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <p id="dataaa" style="display: none;"><%= ord %></p>
+    <p id="service" style="display: none;"><%= srv %></p>
+    <div style="height:100px"></div>
+    <div class="site-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <form action="/order" method="post" id="myform">
+                    <div class="p-3 p-lg-5 border">
+                        <p class="text-black form-group row" id="1"></p>
+                        <p class="text-black form-group row" id="2"></p>
+                        <p class="text-black form-group row" id="3"></p>
+
+                        <button type="submit">Отменить заказ</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+
+
+
+<script>
+        try{
+            var data = JSON.parse(document.getElementById("dataaa").innerText);
+
+            document.getElementById("1").innerText=data.CustomerName;
+            document.getElementById("2").innerText= "Услуга "+document.getElementById("service").innerText;
+            document.getElementById("3").innerText=data.deliveryDate;
+
+            document.getElementById("myform").setAttribute("action", "/orders/delete/"+data._id);
+
+
+
+        }catch(err){console.log(err)}
+
+
+    </script>
+
+
+
+</div>
+</body>
+</html>

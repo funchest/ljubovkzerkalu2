@@ -1,0 +1,14 @@
+{
+  "name": "website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "services.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alexander Fomitsjov",
+  "license": "ISC",
+  "engines": {
+    "node": "10.x"
+  }
+}

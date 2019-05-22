@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Любовь к Зеркалу</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <!--
+    <link rel="stylesheet" href="css/jquery.datetimepicker.min.css">
+    <script src="js/jquery.datetimepicker.full.js"></script>
+    -->
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/style.css">
+
+
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <style>
+        @keyframes slide-up {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        #tit{
+            position: -webkit-sticky; /* Safari */
+            position: absolute;
+            top: 10%;
+            left:44%;
+            background-image: url('images/titlebackground.png');
+            height: 60px;
+            width: 300px;
+            z-index: 1;
+        }
+        .date{
+            animation: slide-up 0.4s ease;
+        }
+    </style>
+</head>
+<body>
+<div class="site-wrap">
+    <div class="site-navbar bg-white py-2">
+
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="logo">
+                    <div class="site-logo">
+                        <a href="/" class="js-logo-clone">Любовь<span style="color:red"> к</span> Зеркалу</a>
+                    </div>
+                </div>
+                <div class="main-nav d-none d-lg-block">
+                    <nav class="site-navigation text-right text-md-center" role="navigation">
+                        <ul class="site-menu js-clone-nav d-none d-lg-block">
+                            <li class="has-children active">
+                                <a href="index.html">Услуги</a>
+                                <ul class="dropdown">
+                                    <li><a href="/formen">Мужчины</a></li>
+                                    <li><a href="/forwomen">Женьщины</a></li>
+                                    <li><a href="/forkids">Подростки</a></li>
+                                </ul>
+                            </li>
+
+
+                            <li><a href="../contact.html">Контакты</a></li>
+                        </ul>
+                    </nav>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div style="height:100px"></div>
+    <div class="site-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+
+                    <form action="/order" method="post" name = "myForm" id="theform" onsubmit = "return validateForm()">
+
+                        <div class="p-3 p-lg-5 border">
+                            <input id="5" name="ServiceID" style="display: none" placeholder="">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="c_fname" class="text-black">Фамилия и имя<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="c_fname" name="CustomerName" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <p class="text-black" style="font-size: 12pt;">Выберите как получить уведомление: SMS или Email</p><p class="text-black" style="font-size: 11pt;">(как минимум что-то одно)</p>
+                                    <label for="c_email" class="text-black">Email</label>
+                                    <input type="email" class="form-control" id="c_email" name="email" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="c_subject" class="text-black">Телефон <span style="font-size: 10pt;">(вам придет одно СМС напоминание)</span></label>
+                                    <input type="text" id="c_subject" name="phonenum" class="form-control bfh-phone" placeholder="37212356789 (включите номер страны без плюса)">
+                                </div>
+                            </div>
+
+                            <div class="mbsc-col-sm-12 mbsc-col-md-4">
+                                <input id="finalDate" name="deliveryDate" style="display: none" />
+                                <label for="datepicker" class="text-black">Дата<span class="text-danger">*</span></label>
+                                    <!--<input id="deliveryDate" name="deliveryDate" class="form-control"  required/> -->
+                                <input type="text" id="datepicker"  class="form-control" onchange="chooseday(this)" required/>
+                                <div id="The_list">
+
+                                </div>
+
+                            </div>
+<!--
+                            <div class="form-group row">
+                                <div class="col-lg-12">
+                                    <input type="submit" class="btn btn-primary btn-lg btn-block" value="Отправить">
+                                </div>
+                            </div>
+                            -->
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-md-5 ml-auto">
+                    <img id="im"  alt="image" style="position: sticky">
+                </div>
+
+                <div class="col-md-7">
+                    <p class="text-black">Коментарии</p>
+                    <div id="box">
+                        <!--<h5 class="text-black">Alex &nbsp;&nbsp;<span class="text-black" style="font-size: 10pt;">5/5/2015 13:30</span></h5>
+
+                        <p class="text-black" style="word-wrap:break-word;font-size: 13pt;">&nbsp;&nbsp;&nbsp;&nbsp;zaebisj</p>
+                        <h6 class="text-black">ktoto ewe</h6>
+                        <p class="text-black" style="word-wrap:break-word;font-size: 13pt;">&nbsp;&nbsp;&nbsp;&nbsp;hujna</p>-->
+
+                    </div>
+                </div>
+
+                <div class="col-md-5 ml-auto">
+                    <form action="/comment" method="post" name = "commentForm" id="commentform">
+                        <input id="6" name="ServiceID" style="display: none" placeholder="">
+                        <p class="text-black">Оставить комментарий</p>
+                        <div class="form-group">
+                            <label for="cName" class="text-black">Имя</label>
+                            <input type="text" name="CustomerName" class="form-control" id="cName" placeholder="" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="text" class="text-black">Комментарий</label>
+                            <textarea class="form-control" id="text" name="text" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Отправить</button>
+                    </form>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<p id="1" style="display: none;"><%= service %></p>
+<p id="list" style="display: none;"><%= arr %></p>
+<p id="services" style="display: none;"><%= arr2 %></p>
+<p id="comments" style="display: none;"><%= arr3 %></p>
+<div id="tit">
+    <h2 style = "text-align: center; top: 50%;color: #0b0b0b"><b id="3" >закать + имя </b></h2>
+    <h3 style = "font-size: 13pt; text-align: right; top: 50%;color: #0b0b0b"><i id="4" >по цене + цена </i></h3>
+</div>
+<script>
+    var service = JSON.parse(document.getElementById("1").innerText);
+    var orders = JSON.parse(document.getElementById("list").innerText);
+    var comments = JSON.parse(document.getElementById("comments").innerText);
+    var listOfServices = JSON.parse(document.getElementById("services").innerText);
+
+    /*
+
+    <h5 class="text-black">Alex &nbsp;&nbsp;<span class="text-black" style="font-size: 10pt;">5/5/2015 13:30</span></h5>
+    <p class="text-black" style="word-wrap:break-word;font-size: 13pt;">&nbsp;&nbsp;&nbsp;&nbsp;zaebisj</p>
+    */
+    var box= document.getElementById("box");
+    for(c of comments){
+        var h5 = document.createElement("h5");
+        h5.classList.add("text-black");
+        h5.innerHTML=c.CustomerName+"&ensp;";
+
+        var span = document.createElement("span");
+        span.classList.add("text-black");
+        var style = document.createAttribute("style");
+        style.value="font-size: 10pt;";
+        span.setAttributeNode(style);
+        span.innerText=c.date;
+        h5.appendChild(span);
+        box.appendChild(h5);
+
+        var p = document.createElement("p");
+        p.classList.add("text-black");
+        var style2 = document.createAttribute("style");
+        style2.value="word-wrap:break-word;font-size: 13pt;";
+        p.setAttributeNode(style2);
+        p.innerHTML="&ensp;&ensp;"+c.text;
+        box.appendChild(p);
+    }
+
+
+    function chooseday(a){
+        document.getElementById("The_list").innerHTML = "";
+        var schedule=[
+            [9,0],
+            [9,30],
+            [10,0],
+            [10,30],
+            [11,0],
+            [11,30],
+            [12,0],
+            [12,30],
+            [13,0],
+            [13,30],
+            [14,0],
+            [14,30],
+            [15,0],
+            [15,30],
+            [16,0],
+            [16,30],
+            [17,0],
+            [17,30],
+            [18,0],
+            [18,30],
+            [19,0],
+            [19,30],
+            [20,0],
+            [20,30],
+            [21,0],
+            [21,30],
+            [22,0]
+        ];
+        var date= document.getElementById("datepicker").value;
+        var takenTime=[];
+        for(o of orders) {
+            //check if day is the same then proceed
+            var orderDate = (o.deliveryDate).substr(0, 10);
+            if (orderDate === date) {
+
+                var h = parseInt((o.deliveryDate).substr(11, 2));
+                var m = parseInt((o.deliveryDate).substr(14, 2));
+                var endH = h;
+                var endM = m;
+                endM += o.serviceDuration;
+                while (endM >= 60) {
+                    endH++;
+                    endM -= 60;
+                }
+                if (endM > 30) endM = 30;
+                else if (endM < 30) endM = 0;
+                takenTime.push([h, m], [endH, endM]);
+                document.getElementById("finalDate").value = date;
+
+
+            }
+
+        }
+        for(t of takenTime){
+            var index = indexInArray(schedule,[t[0],t[1]]);
+            schedule.splice(index,1);
+
+        }
+        var div = document.getElementById("The_list");
+        var p = document.createElement("p");
+        p.classList.add("text-black");
+        p.innerText="Выберите время";
+        div.appendChild(p);
+        var star = document.createElement("span");
+        star.classList.add("text-danger");
+        star.innerText="*";
+        p.appendChild(star);
+        for(time of schedule){
+            var formattedMin=time[1];
+            if(formattedMin==0)formattedMin="0"+formattedMin;
+            var btn = document.createElement("button");
+            btn.classList.add("btn");
+            btn.classList.add("btn-primary");//btn btn-primary btn-lg btn-block
+            btn.classList.add("btn-lg");
+            btn.classList.add("btn-block");
+            btn.classList.add("date");
+            btn.innerText=time[0]+":" + formattedMin;
+            btn.onclick=function(){
+
+                document.getElementById("finalDate").value =date+" "+this.innerText;
+                console.log(document.getElementById("finalDate").value);
+                document.getElementById("theform").submit();
+            };
+
+            div.appendChild(btn);
+
+        }
+
+    }
+
+    function indexInArray(array, item) {
+        for (var i = 0; i < array.length; i++) {
+            // This if statement depends on the format of your array
+            if (array[i][0] == item[0] && array[i][1] == item[1]) {
+                return i;   // Found it
+            }
+        }
+        return -1;   // Not found
+    }
+
+
+    function validateForm() {
+        var tel=document.getElementById("c_subject").value,
+            mail=document.getElementById("c_email").value;
+
+        if((( !(mail).includes("@") || !(mail).includes(".") ) && (mail).length<6) || !tel.length>9)
+        {
+            alert("тел номер или Email неверны");
+            return false
+        }
+        else
+            {
+                return true
+            }
+
+
+        /*if(mail=="" && tel.length<10){
+            alert("Выберите как получить уведомление: SMS или Email");
+            return (false);
+        }else{
+
+            if((!mail.includes("@") || !mail.includes(".") ) && tel.length<10)
+            {
+                alert("Неверный email");
+                return false;
+            }
+            else return (true);
+        }*/
+    }
+</script>
+
+<script>
+    document.getElementById("3").innerText="Заказать "+service.name;
+    document.getElementById("4").innerText="по цене "+service.price +"€";
+    document.getElementById("5").value=service._id;
+    document.getElementById("6").value=service._id;
+    //document.getElementById("im").se
+    var src = document.createAttribute("src");
+    src.value = "../images/"+service.name+".jpg";
+    document.getElementById("im").setAttributeNode(src);
+
+</script>
+
+<script>
+    $( function() {
+        $( "#datepicker" ).datepicker({
+
+        });
+    } );
+
+</script>
+</body>
+</html>

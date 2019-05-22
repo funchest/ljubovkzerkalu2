@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Любовь к Зеркалу</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+
+
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+
+        #tit{
+            position: -webkit-sticky; /* Safari */
+            position: absolute;
+            top: 10%;
+            left:44%;
+            background-image: url('images/titlebackground.png');
+            height: 60px;
+            width: 300px;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+<div class="site-wrap">
+
+
+    <div class="site-navbar bg-white py-2">
+
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="logo">
+                    <div class="site-logo">
+                        <a href="index.html" class="js-logo-clone">Любовь<span style="color:red"> к</span> Зеркалу</a>
+                    </div>
+                </div>
+                <div class="main-nav d-none d-lg-block">
+                    <nav class="site-navigation text-right text-md-center" role="navigation">
+                        <ul class="site-menu js-clone-nav d-none d-lg-block">
+                            <li class="has-children active">
+                                <a href="index.html">Услуги</a>
+                                <ul class="dropdown">
+                                    <li><a href="/formen">Мужчины</a></li>
+                                    <li><a href="/forwomen">Женьщины</a></li>
+                                    <li><a href="/forkids">Подростки</a></li>
+                                </ul>
+                            </li>
+
+
+                            <li><a href="contact.html">Контакты</a></li>
+                        </ul>
+                    </nav>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="products-wrap border-top-0" >
+        <div class="container-fluid">
+            <div class="row no-gutters products" id="stuff">
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="tit">
+    <h2 style = "text-align: center; top: 50%;color: #0b0b0b"><b>Для Подростков</b></h2>
+</div>
+
+<p id="1" style="display: none;"><%= arr %></p>
+<script>
+
+    var z= document.getElementById("1").innerText;
+    //var z = (""+<%= arr %>+"").toString();
+    var data = JSON.parse(z);
+
+    var container=document.getElementById("stuff");
+    for(s of data){
+            var div = document.createElement("div");
+            div.classList.add("col-6");
+            div.classList.add("col-md-6");
+            div.classList.add("col-lg-4");
+            container.appendChild(div);
+
+
+            var a = document.createElement("a");
+            a.classList.add("item");
+            var href = document.createAttribute("href");
+            href.value = "services/"+s._id;
+            a.setAttributeNode(href);
+            div.appendChild(a);
+
+
+            var img = document.createElement("img");
+            img.classList.add("img-fluid");
+            var src = document.createAttribute("src");
+            src.value = "images/" + s.name + ".jpg";
+            img.setAttributeNode(src);
+            var alt = document.createAttribute("alt");
+            alt.value = "Image";
+            img.setAttributeNode(alt);
+            a.appendChild(img);
+
+            var div2 = document.createElement("div");
+            div2.classList.add("item-info");
+            a.appendChild(div2);
+            var h3 = document.createElement("h3");
+            var text = document.createTextNode(s.name);
+            h3.appendChild(text);
+            div2.appendChild(h3);
+            var strong = document.createElement("strong");
+            strong.classList.add("price");
+            var price = document.createTextNode(s.price + "€");
+            strong.appendChild(price);
+            div2.appendChild(strong);
+
+
+    }
+
+</script>
+</body>
+</html>
