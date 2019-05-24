@@ -4,6 +4,7 @@
     <title>Любовь к Зеркалу</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
     <link href="https://fonts.googleapis.com/css?family=Rubik:400,700" rel="stylesheet">
     <link rel="stylesheet" href="fonts/icomoon/style.css">
 
@@ -188,7 +189,7 @@
 
     </div>
 </div>
-
+<p id="scrip" style="display: none;"><%= scrip %></p>
 <p id="1" style="display: none;"><%= service %></p>
 <p id="list" style="display: none;"><%= arr %></p>
 <p id="services" style="display: none;"><%= arr2 %></p>
@@ -197,7 +198,6 @@
     <h2 id="theh2" style = "text-align: center; top: 50%;color: #0b0b0b"><b id="3" >закать + имя </b></h2>
     <h3 style = "font-size: 13pt; text-align: right; top: 50%;color: #0b0b0b"><i id="4" >по цене + цена </i></h3>
 </div>
-
 
 <script>
     var service = JSON.parse(document.getElementById("1").innerText);
@@ -344,9 +344,10 @@
 
     function validateForm() {
         var tel=document.getElementById("c_subject").value,
-            mail=document.getElementById("c_email").value;
+            mail=document.getElementById("c_email").value,
+            name=document.getElementById("c_fname").value;
 
-        if((( !(mail).includes("@") || !(mail).includes(".") ) && (mail).length<6) || !tel.length>9)
+        if(((( !(mail).includes("@") || !(mail).includes(".") ) && (mail).length<6) || !tel.length>9) && name.length<2)
         {
             alert("тел номер или Email неверны");
             return false
@@ -462,6 +463,13 @@
 </script>
 
 
+<script>
+    var scrip = document.getElementById("scrip").innerText;
+    
+        if (scrip.length > 5) {
+            alert(scrip);
+        }
 
+</script>
 </body>
 </html>
