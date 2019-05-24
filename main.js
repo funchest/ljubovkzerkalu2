@@ -11,6 +11,8 @@ const nexmo = new Nexmo({
 })
 const port = process.env.PORT || 5000;
 
+const ownerEmail='thealx98@hotmail.com';
+
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 app.set('view engine', 'ejs');
@@ -107,8 +109,37 @@ app.post("/comment",(req,res)=>{
     var comment = new Comment(newComment);
     comment.save().then(()=>{
 
+        let transporter = nodeMailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true, // use SSL
+            auth: {
+                user: 'aleksndr.fomitsjov@gmail.com',
+                pass: 'ezggyeshnhukfijp'
+            }
+        });
+
+
+
         Service.findById(newComment.ServiceID).then((service)=>{
             if(service){
+
+                let mailOptions = {
+                    from: 'aleksndr.fomitsjov@gmail.com', // sender address
+                    to: ownerEmail, // list of receivers
+                    subject: "новый коментарий", // Subject line
+                    text: "новый коментарий: \nОт " + newComment.CustomerName + "\nСервис " + service.name + "\nText:\n"+newComment.text // plain text body
+
+                };
+                transporter.sendMail(mailOptions, (error, info) => {
+                    if (error) {
+                        return console.log(error);
+                    }
+                    console.log('Message %s sent: %s', info.messageId, info.response);
+
+                });
+
+
                 Order.find().lean().then((arr)=> {
                     Service.find().lean().then((arr2)=> {
                         Comment.find({ServiceID:newComment.ServiceID}).lean().then((arr3)=> {
@@ -116,8 +147,8 @@ app.post("/comment",(req,res)=>{
                             arr = JSON.stringify(arr);
                             service = JSON.stringify(service);
                             arr3=JSON.stringify(arr3);
-
-                            res.render(__dirname + "/order.html", {service: service, arr: arr,arr2:arr2,arr3:arr3});
+                            var scrip="";
+                            res.render(__dirname + "/order.html", {service: service, arr: arr,arr2:arr2,arr3:arr3,scrip:scrip});
                         }).catch(err=>{
                             if(err){
                                 throw err;
@@ -163,8 +194,8 @@ app.get("/services/:id",(req,res)=>{
                         arr = JSON.stringify(arr);
                         service = JSON.stringify(service);
                         arr3=JSON.stringify(arr3);
-
-                        res.render(__dirname + "/order.html", {service: service, arr: arr,arr2:arr2,arr3:arr3});
+                        var scrip="";
+                        res.render(__dirname + "/order.html", {service: service, arr: arr,arr2:arr2,arr3:arr3,scrip:scrip});
                     }).catch(err=>{
                         if(err){
                             throw err;
@@ -227,10 +258,39 @@ app.post("/order",(req,res)=>{
             ) || !(newOrder.phonenum).length>9)
         {
             console.log("*********NOT SAVING*********");
-            return
+            try {
+
+                Order.find().lean().then((arr)=> {
+                    Service.find().lean().then((arr2)=> {
+                        Comment.find({ServiceID:service._id}).lean().then((arr3)=> {
+                            arr2=JSON.stringify(arr2);
+                            arr = JSON.stringify(arr);
+                            service = JSON.stringify(service);
+                            arr3=JSON.stringify(arr3);
+                            var scrip="вы неверно заполнили форму";
+                            res.render(__dirname + "/order.html", {service: service, arr: arr,arr2:arr2,arr3:arr3,scrip:scrip});
+                            return;
+                        }).catch(err=>{
+                            if(err){
+                                throw err;
+                            }
+                        });
+                    }).catch(err=>{
+                        if(err){
+                            throw err;
+                        }
+                    });
+                }).catch(err=>{
+                    if(err){
+                        throw err;
+                    }
+                });
+
+            }catch(err){{console.log(err);return;}}
+            return;
         }
 
-1
+
         let transporter = nodeMailer.createTransport({
             host: 'smtp.gmail.com',
             port: 465,
@@ -242,7 +302,7 @@ app.post("/order",(req,res)=>{
         });
         let mailOptions = {
             from: 'aleksndr.fomitsjov@gmail.com', // sender address
-            to: 'thealx98@hotmail.com', // list of receivers
+            to: ownerEmail, // list of receivers
             subject: "новый клиент", // Subject line
             text: "новый клиент: " + newOrder.CustomerName + ", телефон: " + newOrder.phonenum + ", email "+newOrder.email +"\n заказал: " + name + ", дата: " + newOrder.deliveryDate // plain text body
 
