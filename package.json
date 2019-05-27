@@ -1,39 +1,26 @@
 {
   "name": "ljubovkzerkalu",
-
   "version": "1.0.0",
-
   "description": "beauty salon",
- 
- "main": "main.js",
-
-  "scripts": 
-{
-    
-	"test": "echo \"Error: no test specified\" && exit 1",
-   
- "start": "node main.js"
- 
- },
- "dependencies": {
-
-  "express":"*",
-  
-  "body-parser":"*",
-  
-   "mongoose":"*",
-  "html" : "*",
-  "nodemailer": "*",
-  "path": "*",
-  "nexmo": "*",
-  "ejs" : "*"
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js"
   },
-  
-"author": "Alexander Fomitsjov",
- 
- "license": "ISC",
-  
-"engines": {
+  "dependencies": {
+    "body-parser": "*",
+    "ejs": "*",
+    "express": "*",
+    "html": "*",
+    "mongoose": "*",
+    "nexmo": "*",
+    "node-fetch": "^2.6.0",
+    "nodemailer": "*",
+    "path": "*"
+  },
+  "author": "Alexander Fomitsjov",
+  "license": "ISC",
+  "engines": {
     "node": "10.x"
   },
   "repository": {
