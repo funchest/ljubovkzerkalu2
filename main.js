@@ -273,13 +273,7 @@ app.post("/order",(req,res)=>{
             initialDate: curday("/"),
             deliveryDate: req.body.deliveryDate
         };
-        if(
-            (
-                ( !(newOrder.email).includes("@") || !(newOrder.email).includes(".") )
-
-                && (newOrder.email).length<6
-
-            ) || !(newOrder.phonenum).length>9)
+        if(!(newOrder.email).includes("@") && !(newOrder.email).includes(".")  && (newOrder.email).length<6  && (newOrder.phonenum).length<7 || (newOrder.phonenum).length>11)
         {
             console.log("*********NOT SAVING*********");
             try {

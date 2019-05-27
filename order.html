@@ -24,6 +24,49 @@
             return check;
         };
     </script>
+
+    <!--form validation-->
+    <script>
+        function validateForm() {
+            var emailID = document.myForm.email.value;
+            var atpos = emailID.indexOf("@");
+            var dotpos = emailID.lastIndexOf(".");
+            var tel = document.myForm.phonenum.value;
+
+            if ((atpos < 1 || ( dotpos - atpos < 2 ) ) && (tel.length<8 || tel.length>11 ) ){
+                alert("Введите правельный эмайл или тел номер");
+                document.myForm.email.focus() ;
+                return false;
+            }
+
+            var name = document.myForm.CustomerName.value;
+            if(name.length<5){
+                alert("Введите правельное имя");
+                document.myForm.CustomerName.focus();
+                return false;
+            }
+
+            return( true );
+
+
+        }
+
+        /* var tel=document.getElementById("c_subject").value,
+             mail=document.getElementById("c_email").value,
+             name=document.getElementById("c_fname").value;
+
+         if(((( !(mail).includes("@") || !(mail).includes(".") ) && (mail).length<6) || !tel.length>9) && name.length<2)
+         {
+             alert("тел номер или Email неверны");
+             return false
+         }
+         else
+         {
+             return true
+         }
+
+     }*/
+    </script>
     <script src="js/jquery-3.3.1.min.js"></script>
 
     <link rel="stylesheet" href="css/aos.css">
@@ -102,7 +145,7 @@
             <div class="row">
                 <div class="col-md-7">
 
-                    <form action="/order" method="post" name = "myForm" id="theform" onsubmit = "return validateForm()">
+                    <form onSubmit = "return (validateForm());" action="/order" method="post" name = "myForm" id="theform" >
 
                         <div class="p-3 p-lg-5 border">
                             <input id="5" name="ServiceID" style="display: none" placeholder="">
@@ -189,17 +232,19 @@
 
     </div>
 </div>
-
+<p id="scrip" style="display: none;"><%= scrip %></p>
 <p id="1" style="display: none;"><%= service %></p>
 <p id="list" style="display: none;"><%= arr %></p>
 <p id="services" style="display: none;"><%= arr2 %></p>
 <p id="comments" style="display: none;"><%= arr3 %></p>
-<p id="scrip" style="display: none;"><%= scrip %></p>
 <div id="tit">
     <h2 id="theh2" style = "text-align: center; top: 50%;color: #0b0b0b"><b id="3" >закать + имя </b></h2>
     <h3 style = "font-size: 13pt; text-align: right; top: 50%;color: #0b0b0b"><i id="4" >по цене + цена </i></h3>
 </div>
 
+
+
+<!--comments + time -->
 <script>
     var service = JSON.parse(document.getElementById("1").innerText);
     var orders = JSON.parse(document.getElementById("list").innerText);
@@ -323,7 +368,9 @@
 
                 document.getElementById("finalDate").value =date+" "+this.innerText;
                 console.log(document.getElementById("finalDate").value);
-                document.getElementById("theform").submit();
+                if(validateForm()) {
+                    document.getElementById("theform").submit();
+                }
             };
 
             div.appendChild(btn);
@@ -342,25 +389,9 @@
         return -1;   // Not found
     }
 
-
-    function validateForm() {
-        var tel=document.getElementById("c_subject").value,
-            mail=document.getElementById("c_email").value,
-            name=document.getElementById("c_fname").value;
-
-        if(((( !(mail).includes("@") || !(mail).includes(".") ) && (mail).length<6) || !tel.length>9) && name.length<2)
-        {
-            alert("тел номер или Email неверны");
-            return false
-        }
-        else
-            {
-                return true
-            }
-
-    }
 </script>
 
+<!--product title-->
 <script>
     document.getElementById("3").innerText="Заказать "+service.name;
     document.getElementById("4").innerText="по цене "+service.price +"€";
@@ -374,6 +405,7 @@
 
 </script>
 
+<!--date-picker-->
 <script>
     $( function() {
         $( "#datepicker" ).datepicker({
@@ -382,6 +414,8 @@
     } );
 
 </script>
+
+<!--mobile version-->
 <script>
     //mobile version
     if(window.mobilecheck()){
@@ -463,10 +497,10 @@
     }
 </script>
 
-
+<!--submission error-->
 <script>
     var scrip = document.getElementById("scrip").innerText;
-    
+
         if (scrip.length > 5) {
             alert(scrip);
         }
