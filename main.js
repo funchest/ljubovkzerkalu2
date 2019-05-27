@@ -11,7 +11,17 @@ const nexmo = new Nexmo({
 })
 const port = process.env.PORT || 5000;
 
-const ownerEmail='thealx98@hotmail.com';
+const employeeEmail='thealx98@hotmail.com';
+const mainEmail='aleksndr.fomitsjov@gmail.com';
+let transporter = nodeMailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true, // use SSL
+    auth: {
+        user: mainEmail,
+        pass: 'ezggyeshnhukfijp'
+    }
+});
 
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
@@ -133,25 +143,12 @@ app.post("/comment",(req,res)=>{
     }
     var comment = new Comment(newComment);
     comment.save().then(()=>{
-
-        let transporter = nodeMailer.createTransport({
-            host: 'smtp.gmail.com',
-            port: 465,
-            secure: true, // use SSL
-            auth: {
-                user: 'aleksndr.fomitsjov@gmail.com',
-                pass: 'ezggyeshnhukfijp'
-            }
-        });
-
-
-
         Service.findById(newComment.ServiceID).then((service)=>{
             if(service){
 
                 let mailOptions = {
                     from: 'aleksndr.fomitsjov@gmail.com', // sender address
-                    to: ownerEmail, // list of receivers
+                    to: employeeEmail, // list of receivers
                     subject: "новый коментарий", // Subject line
                     text: "новый коментарий: \nОт " + newComment.CustomerName + "\nСервис " + service.name + "\nText:\n"+newComment.text // plain text body
 
@@ -308,20 +305,9 @@ app.post("/order",(req,res)=>{
             }catch(err){{console.log(err);return;}}
             return;
         }
-
-
-        let transporter = nodeMailer.createTransport({
-            host: 'smtp.gmail.com',
-            port: 465,
-            secure: true, // use SSL
-            auth: {
-                user: 'aleksndr.fomitsjov@gmail.com',
-                pass: 'ezggyeshnhukfijp'
-            }
-        });
         let mailOptions = {
             from: 'aleksndr.fomitsjov@gmail.com', // sender address
-            to: ownerEmail, // list of receivers
+            to: employeeEmail, // list of receivers
             subject: "новый клиент", // Subject line
             text: "новый клиент: " + newOrder.CustomerName + ", телефон: " + newOrder.phonenum + ", email "+newOrder.email +"\n заказал: " + name + ", дата: " + newOrder.deliveryDate // plain text body
 
@@ -401,20 +387,12 @@ app.post("/orders/delete/:id",(req,res)=>{
     });
     Order.findByIdAndDelete(req.params.id).then(()=>{
         var src = "Спасибо заказ успешно удален";
-        let transporter = nodeMailer.createTransport({
-            host: 'smtp.gmail.com',
-            port: 465,
-            secure: true, // use SSL
-            auth: {
-                user: 'aleksndr.fomitsjov@gmail.com',
-                pass: 'ezggyeshnhukfijp'
-            }
-        });
+
         let mailOptions = {
             from: 'aleksndr.fomitsjov@gmail.com', // sender address
-            to: ownerEmail, // list of receivers
+            to: employeeEmail, // list of receivers
             subject: "заказ был удален", // Subject line
-            text: "удаленный заказ: " + order.CustomerName + ", телефон: " + order.phonenum + ", email "+order.email +"\n дата: " + newOrder.deliveryDate+", длинной: " + order.serviceDuration // plain text body
+            text: "удаленный заказ: " + order.CustomerName + ", телефон: " + order.phonenum + ", email "+order.email +"\n дата: " + order.deliveryDate+", длинной: " + order.serviceDuration // plain text body
 
         };
         transporter.sendMail(mailOptions, (error, info) => {
