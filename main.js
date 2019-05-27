@@ -391,8 +391,39 @@ app.post("/order",(req,res)=>{
 
 app.post("/orders/delete/:id",(req,res)=>{
     console.log("deleted" + req.params.id);
+    var order;
+    Order.findById(req.params.id).then((ord)=>{
+        order=ord;
+    }).catch(err=>{
+        if(err){
+            throw err;
+        }
+    });
     Order.findByIdAndDelete(req.params.id).then(()=>{
         var src = "Спасибо заказ успешно удален";
+        let transporter = nodeMailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true, // use SSL
+            auth: {
+                user: 'aleksndr.fomitsjov@gmail.com',
+                pass: 'ezggyeshnhukfijp'
+            }
+        });
+        let mailOptions = {
+            from: 'aleksndr.fomitsjov@gmail.com', // sender address
+            to: ownerEmail, // list of receivers
+            subject: "заказ был удален", // Subject line
+            text: "удаленный заказ: " + order.CustomerName + ", телефон: " + order.phonenum + ", email "+order.email +"\n дата: " + newOrder.deliveryDate+", длинной: " + order.serviceDuration // plain text body
+
+        };
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                return console.log(error);
+            }
+            console.log('Message %s sent: %s', info.messageId, info.response);
+
+        });
        res.redirect("/");
 
         //res.render(__dirname + "../../index.html", {src:src});
