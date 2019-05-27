@@ -22,7 +22,7 @@
     </script>
 
     <link rel="stylesheet" href="css/aos.css">
-
+    <script src="js/aos.js"> </script>
     <link rel="stylesheet" href="css/style.css">
     <style>
         .cyka{
@@ -112,6 +112,9 @@
             div.classList.add("col-md-6");
             div.classList.add("col-lg-4");
 
+            /*var anime = document.createAttribute("data-aos");
+            anime.value="fade-up";
+            div.setAttributeNode(anime);*/
 
             container.appendChild(div);
 
@@ -147,6 +150,10 @@
             var price = document.createTextNode(s.price + "€");
             if(window.mobilecheck()){
                 div.style="width:100%;height:40%;";
+                var anime = document.createAttribute("data-aos");
+                anime.value="fade-up";
+                div.setAttributeNode(anime);
+
                 h3.style="font-size: 180%;";
                 strong.style="font-size: 120%;";
             }else{
@@ -159,6 +166,7 @@
 
 
     }
+    AOS.init({duration:1000,offset:200});
 
 </script>
 

@@ -24,7 +24,7 @@
     </script>
 
     <link rel="stylesheet" href="css/aos.css">
-
+    <script src="js/aos.js"> </script>
     <link rel="stylesheet" href="css/style.css">
     <style>
         .cyka{
@@ -148,6 +148,10 @@
                 div.style="width:100%;height:40%;";
                 h3.style="font-size: 180%;";
                 strong.style="font-size: 120%;";
+                var anime = document.createAttribute("data-aos");
+                anime.value="fade-up";
+                div.setAttributeNode(anime);
+                AOS.init({duration:1000,offset:200});
             }else{
                 div.classList.add("col-6");
                 document.getElementById("theh2").classList.add("cyka");

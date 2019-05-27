@@ -24,7 +24,7 @@
     </script>
 
     <link rel="stylesheet" href="css/aos.css">
-
+    <script src="js/aos.js"> </script>
     <link rel="stylesheet" href="css/style.css">
     <style>
         .cyka{
@@ -48,6 +48,8 @@
 <div class="site-wrap">
 
 
+
+
     <div class="site-navbar bg-white py-2">
 
         <div class="container">
@@ -68,9 +70,7 @@
                                     <li><a href="/forkids">Подростки</a></li>
                                 </ul>
                             </li>
-
-
-                            <li><a href="contact.html">Контакты</a></li>
+                            <li><a href="../#contactinfo">Контакты</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -148,6 +148,12 @@
                 div.style="width:100%;height:40%;";
                 h3.style="font-size: 180%;";
                 strong.style="font-size: 120%;";
+                var anime = document.createAttribute("data-aos");
+                anime.value="fade-up";
+                var anime2 = document.createAttribute("data-aos-offset");
+                anime2.value="400";
+                div.setAttributeNode(anime);
+                div.setAttributeNode(anime2);
             }else{
                 div.classList.add("col-6");
                 document.getElementById("theh2").classList.add("cyka");
@@ -158,7 +164,7 @@
 
 
     }
-
+    AOS.init({duration:1000});
 </script>
 <script>
     //mobile version
