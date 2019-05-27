@@ -35,6 +35,46 @@
     </style>
 </head>
 <body>
+<!-- face book login test -->
+<script>
+
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '1294329887381245',
+            cookie     : true,
+            xfbml      : true,
+            version    : 'v3.3'
+        });
+
+        FB.AppEvents.logPageView();
+
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    var r;
+    function loginWithFacebook(){
+        FB.login(response => {
+            const {authResponse:{accessToken, userID}}=response;
+            var id='';
+            FB.api('/me',function(response){
+                r = JSON.stringify(response);
+                r=JSON.parse(r);
+                id=r.id;
+
+            });
+
+        },{scope: 'public_profile,email'})
+        return false
+    }
+
+</script>
+<!--  -->
 
 <div class="site-wrap">
 

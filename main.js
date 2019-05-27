@@ -2,7 +2,7 @@
 const app = express();
 const mongoose = require("mongoose");
 const bodyParser=require("body-parser");
-
+const fetch=require('node-fetch');
 const nodeMailer = require('nodemailer');
 const Nexmo = require('nexmo');
 const nexmo = new Nexmo({
@@ -36,6 +36,30 @@ app.use(require('body-parser').urlencoded({ extended: true }));
 
 mongoose.connect("mongodb+srv://thealx98:chmoshniki->nahuj1@cluster0-2aaw0.azure.mongodb.net/shop?retryWrites=true", { useNewUrlParser: true });
 
+//FACE BOOK **********************************
+app.get('/webhook',(req,res) => {
+    let VERIFY_TOKEN = 'pusher-bot';
+
+    let mode = req.query['hub.mode'];
+    let token = req.query['hub.verify_token'];
+    let challenge = req.query['hub.challenge'];
+
+    if (mode && token === VERIFY_TOKEN) {
+        res.status(200).send(challenge);
+    } else {
+        res.sendStatus(403);
+    }
+
+})
+
+app.post('/login-with-facebook',(req,res)=>{
+    const {accessToken,userID} = req.body;
+    console.log(req.body)
+})
+
+
+
+//***********************************************
 app.get("/",(req,res)=>{
     Service.find({}).lean().then((arr)=>{
         console.log("1");
