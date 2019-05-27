@@ -15,5 +15,9 @@ mongoose.model("Service",{
     price:{
         type: Number,
         required: true
+    },
+    desc:{
+        type: String,
+        required: true
     }
 });//rofl lmao kek kek2 molodoj

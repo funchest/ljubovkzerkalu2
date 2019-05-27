@@ -33,7 +33,7 @@
             var dotpos = emailID.lastIndexOf(".");
             var tel = document.myForm.phonenum.value;
 
-            if ((atpos < 1 || ( dotpos - atpos < 2 ) ) && (tel.length<8 || tel.length>11 ) ){
+            if ((atpos < 1 || ( dotpos - atpos < 2 ) ) && (tel.length<8 || tel.length>14 ) ){
                 alert("Введите правельный эмайл или тел номер");
                 document.myForm.email.focus() ;
                 return false;
@@ -194,6 +194,9 @@
                     <img id="im"  alt="image" style="position: sticky" >
                 </div>
 
+                    <h4 class="text-black" style="margin-left:1.5%">Описание</h4>
+                    <div  style="width: 95%;word-wrap: break-word;margin:0 auto;" class="text-black"><p id="desc">description description description description description description description description description description description description description description description description description description description description description description description description </p></div>
+
                 <div class="col-md-7">
                     <h4 class="text-black">Коментарии:</h4>
                     <div id="box" >
@@ -256,8 +259,36 @@
     <h5 class="text-black">Alex &nbsp;&nbsp;<span class="text-black" style="font-size: 10pt;">5/5/2015 13:30</span></h5>
     <p class="text-black" style="word-wrap:break-word;font-size: 13pt;">&nbsp;&nbsp;&nbsp;&nbsp;zaebisj</p>
     */
+    document.getElementById("desc").innerText=service.desc;
+
     var box= document.getElementById("box");
-    for(c of comments){
+
+    for(var c=comments.length-1;c>-1;c--){
+        var h5 = document.createElement("h5");
+        var style3 = document.createAttribute("style");
+        style3.value="color: #b21f2d";
+        h5.setAttributeNode(style3);
+        h5.classList.add("text-black");
+        h5.innerHTML=comments[c].CustomerName+"&ensp;";
+
+        var span = document.createElement("span");
+        span.classList.add("text-black");
+        var style = document.createAttribute("style");
+        style.value="font-size: 10pt;";
+        span.setAttributeNode(style);
+        span.innerText=comments[c].date;
+        h5.appendChild(span);
+        box.appendChild(h5);
+
+        var p = document.createElement("p");
+        p.classList.add("text-black");
+        var style2 = document.createAttribute("style");
+        style2.value="word-wrap:break-word;font-size: 13pt;";
+        p.setAttributeNode(style2);
+        p.innerHTML="&ensp;&ensp;"+comments[c].text;
+        box.appendChild(p);
+    }
+   /* for(c of comments){
         var h5 = document.createElement("h5");
         var style3 = document.createAttribute("style");
         style3.value="color: #b21f2d";
@@ -282,7 +313,7 @@
         p.innerHTML="&ensp;&ensp;"+c.text;
         box.appendChild(p);
     }
-
+*/
 
     function chooseday(a){
         document.getElementById("The_list").innerHTML = "";

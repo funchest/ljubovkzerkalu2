@@ -83,9 +83,10 @@ app.post("/services",(req,res)=>{
         name  : req.body.name,
         type  : req.body.type,
         duration: req.body.duration,
-        price : req.body.price
+        price : req.body.price,
+        desc : req.body.desc
     };
-    console.log(newService.name+ " " + newService.type+ " " + newService.duration+ " " + newService.price);
+    console.log(newService.name+ " " + newService.type+ " " + newService.duration+ " " + newService.price + " " + newService.desc);
     var service = new Service(newService);
     service.save().then(()=>{
         console.log("new service");
@@ -273,7 +274,7 @@ app.post("/order",(req,res)=>{
             initialDate: curday("/"),
             deliveryDate: req.body.deliveryDate
         };
-        if(!(newOrder.email).includes("@") && !(newOrder.email).includes(".")  && (newOrder.email).length<6  && (newOrder.phonenum).length<7 || (newOrder.phonenum).length>11)
+        if(!(newOrder.email).includes("@") && !(newOrder.email).includes(".")  && (newOrder.email).length<6  && (newOrder.phonenum).length<7 || (newOrder.phonenum).length>14)
         {
             console.log("*********NOT SAVING*********");
             try {
@@ -339,7 +340,7 @@ app.post("/order",(req,res)=>{
 
         var order = new Order(newOrder);
         order.save().then(()=>{
-            var link = "http://localhost:5000/orders/" + order.id;
+            var link = "https://ljubovkzerkalu.herokuapp.com/orders/" + order.id;
 
             if((newOrder.email).includes("@")){
 
