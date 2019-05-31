@@ -233,7 +233,7 @@
                         </div>
                         <div class="form-group">
                             <label for="mark" class="text-black" id="onchange">Оценка</label><br>
-                            <input type="range" class="custom-range" name="mark" id="mark" step=0.1 min="0" max="5" value="5" onchange="changed();">
+                            <input type="range" class="custom-range" name="mark" id="mark" step=0.1 min="0" max="5" value="5" oninput="changed();">
                         </div>
                         <div class="form-group">
                             <label for="text" class="text-black">Комментарий</label>
@@ -315,33 +315,12 @@
             sumOfMarks+=comments[c].mark;
         }
     }
-    document.getElementById("rating").innerHTML="Средняя оценка " + (sumOfMarks/comments.length).toFixed(1);
-   /* for(c of comments){
-        var h5 = document.createElement("h5");
-        var style3 = document.createAttribute("style");
-        style3.value="color: #b21f2d";
-        h5.setAttributeNode(style3);
-        h5.classList.add("text-black");
-        h5.innerHTML=c.CustomerName+"&ensp;";
-
-        var span = document.createElement("span");
-        span.classList.add("text-black");
-        var style = document.createAttribute("style");
-        style.value="font-size: 10pt;";
-        span.setAttributeNode(style);
-        span.innerText=c.date;
-        h5.appendChild(span);
-        box.appendChild(h5);
-
-        var p = document.createElement("p");
-        p.classList.add("text-black");
-        var style2 = document.createAttribute("style");
-        style2.value="word-wrap:break-word;font-size: 13pt;";
-        p.setAttributeNode(style2);
-        p.innerHTML="&ensp;&ensp;"+c.text;
-        box.appendChild(p);
+    if(sumOfMarks>0) {
+        document.getElementById("rating").innerHTML = "Средняя оценка " + (sumOfMarks / comments.length).toFixed(1);
     }
-*/
+    else{
+        document.getElementById("rating").innerHTML = "Новинка, будьте первыми кто оценит!"
+    }
 
     function chooseday(a){
         document.getElementById("The_list").innerHTML = "";
