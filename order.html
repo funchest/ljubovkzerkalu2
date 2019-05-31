@@ -153,7 +153,7 @@
     <div style="height:100px"></div>
     <div class="site-section">
         <div class="container">
-            <p id="bla" class="text-black col-md-7" style="text-align: center">Закажите сейчас, но платите <b>после!</b></p>
+            <p id="bla" class="text-black col-md-7" style="text-align: center;margin-top:2%">Закажите сейчас, но платите <b>после!</b></p>
             <div class="row">
 
                 <div class="col-md-7">
@@ -205,7 +205,7 @@
 
                 <div class="col-md-5 ml-auto">
                     <img id="im"  alt="image" style="position: sticky" >
-                    <p id="rating" class="text-black" style="text-align: center">rating </p>
+                    <h6 id="rating" class="text-black" style="text-align: center">rating </h6>
                 </div>
 
                     <h4 class="text-black" style="margin-left:1.5%">Описание</h4>
@@ -233,7 +233,7 @@
                         </div>
                         <div class="form-group">
                             <label for="mark" class="text-black" id="onchange">Оценка</label><br>
-                            <input type="range" class="custom-range" name="mark" id="mark" step=0.5 min="0" max="5" onchange="changed();">
+                            <input type="range" class="custom-range" name="mark" id="mark" step=0.1 min="0" max="5" value="5" onchange="changed();">
                         </div>
                         <div class="form-group">
                             <label for="text" class="text-black">Комментарий</label>
@@ -263,6 +263,7 @@
     <h3 style = "font-size: 13pt; text-align: right; top: 50%;color: #0b0b0b"><i id="4" >по цене + цена </i></h3>
 </div>
 <script>
+    document.getElementById("onchange").innerHTML="Оценка <b>"+document.getElementById("mark").value; + "</b>";
     function changed(){
         var value=document.getElementById("mark").value;
         document.getElementById("onchange").innerHTML="Оценка <b>"+value + "</b>";
