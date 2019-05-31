@@ -213,14 +213,7 @@
 
                 <div class="col-md-7">
                     <h4 class="text-black">Коментарии:</h4>
-                    <div id="box" >
-                        <!--<h5 class="text-black">Alex &nbsp;&nbsp;<span class="text-black" style="font-size: 10pt;">5/5/2015 13:30</span></h5>
-
-                        <p class="text-black" style="word-wrap:break-word;font-size: 13pt;">&nbsp;&nbsp;&nbsp;&nbsp;zaebisj</p>
-                        <h6 class="text-black">ktoto ewe</h6>
-                        <p class="text-black" style="word-wrap:break-word;font-size: 13pt;">&nbsp;&nbsp;&nbsp;&nbsp;hujna</p>-->
-
-                    </div>
+                    <div id="box" ></div>
                 </div>
 
                 <div class="col-md-5 ml-auto">
@@ -315,6 +308,11 @@
             sumOfMarks+=comments[c].mark;
         }
     }
+
+    if(document.getElementById("box").innerHTML==""){
+        document.getElementById("box").innerHTML="<span class='text-black'>Коментарией пока что нету, будьте первыми!</span>";
+    }
+
     if(sumOfMarks>0) {
         document.getElementById("rating").innerHTML = "Средняя оценка " + (sumOfMarks / comments.length).toFixed(1);
     }
