@@ -11,7 +11,7 @@ const nexmo = new Nexmo({
 })
 const port = process.env.PORT || 5000;
 
-const employeeEmail='thealx98@hotmail.com';
+const managerEmail='thealx98@hotmail.com';
 const mainEmail='aleksndr.fomitsjov@gmail.com';
 let transporter = nodeMailer.createTransport({
     host: 'smtp.gmail.com',
@@ -139,6 +139,7 @@ app.post("/comment",(req,res)=>{
         CustomerName: req.body.CustomerName,
         ServiceID: req.body.ServiceID,
         date: curday("/"),
+        mark: req.body.mark,
         text: req.body.text
     }
     var comment = new Comment(newComment);
@@ -148,7 +149,7 @@ app.post("/comment",(req,res)=>{
 
                 let mailOptions = {
                     from: 'aleksndr.fomitsjov@gmail.com', // sender address
-                    to: employeeEmail, // list of receivers
+                    to: managerEmail, // list of receivers
                     subject: "новый коментарий", // Subject line
                     text: "новый коментарий: \nОт " + newComment.CustomerName + "\nСервис " + service.name + "\nText:\n"+newComment.text // plain text body
 
@@ -307,7 +308,7 @@ app.post("/order",(req,res)=>{
         }
         let mailOptions = {
             from: 'aleksndr.fomitsjov@gmail.com', // sender address
-            to: employeeEmail, // list of receivers
+            to: managerEmail, // list of receivers
             subject: "новый клиент", // Subject line
             text: "новый клиент: " + newOrder.CustomerName + ", телефон: " + newOrder.phonenum + ", email "+newOrder.email +"\n заказал: " + name + ", дата: " + newOrder.deliveryDate // plain text body
 
@@ -390,9 +391,9 @@ app.post("/orders/delete/:id",(req,res)=>{
 
         let mailOptions = {
             from: 'aleksndr.fomitsjov@gmail.com', // sender address
-            to: employeeEmail, // list of receivers
+            to: managerEmail, // list of receivers
             subject: "заказ был удален", // Subject line
-            text: "удаленный заказ: " + order.CustomerName + ", телефон: " + order.phonenum + ", email "+order.email +"\n дата: " + order.deliveryDate+", длинной: " + order.serviceDuration // plain text body
+            text: "удаленный заказ: " + order.CustomerName + ", телефон: " + order.phonenum + ", email "+order.email +"\n дата: " + order.deliveryDate+", длительность: " + order.serviceDuration+" мин" // plain text body
 
         };
         transporter.sendMail(mailOptions, (error, info) => {
@@ -476,6 +477,7 @@ process.on('unhandledRejection', (reason, p) => {
     // application specific logging, throwing an error, or other logic here
 });
 
+//"05/30/2019 23:31"
 var curday = function(sp){
     today = new Date();
     var dd = today.getDate();
@@ -490,3 +492,65 @@ var curday = function(sp){
     //return (yyyy+sp+mm+sp+dd+" " +hours+":"+min);
     return (mm+sp+dd+sp+yyyy+" " +hours+":"+min);
 };
+
+function reminder() {
+    Order.find().lean().then((orders)=> {
+        orders = JSON.stringify(orders);
+        var curdate=curday("/");
+        var curDay=parseInt(curdate.substr(3,2));
+        var curmon=parseInt(curdate.substr(0,2));
+        var curyear= parseInt(curdate.substr(6,4));
+        var curhour=parseInt(curdate.substr(11,2));
+
+        for(order of orders){
+            var deliverydate=order.deliveryDate;
+            var deliveryday=parseInt(deliverydate.substr(3,2));
+            var deliverymon=parseInt(deliverydate.substr(0,2));
+            var deliveryyear=parseInt( deliverydate.substr(6,4));
+            var deliveryhour=parseInt(deliverydate.substr(11,2));
+
+            var ordinitdate=order.initialDate;
+            var ordinitday=parseInt(ordinitdate.substr(3,2));
+            var ordinitmon=parseInt(ordinitdate.substr(0,2));
+            //eсли равны дни , заказ был сделан более чем 2 дня назад и до деливери осталось 3 часа
+            if(deliveryyear==curyear && ( (deliverymon - ordinitmon)*30 + curDay)-( (deliverymon - ordinitmon)*30 + deliveryday ) == 0 && ( (deliverymon - ordinitmon)*30 + curDay)-( (deliverymon - ordinitmon)*30 + ordinitday ) > 2  && deliveryhour -  curhour < 5){
+
+                var link = "https://ljubovkzerkalu.herokuapp.com/orders/" + order.id;
+
+                    var text = "Дорогая(ой) " + order.CustomerName + "\nСпасибо что выбрали наш салон красоты\nВы заказали " + name + ", дата " + order.deliveryDate + "(мес/день/год), что будет менее чем через 3 часа\nЕсли вдруг передумали то перейдите по ссылке: " + link;
+                    if((order.email).includes("@")){
+                        let mailOptions2 = {
+                            from: 'aleksndr.fomitsjov@gmail.com', // sender address
+                            to: order.email, // list of receivers
+                            subject: "TEST TEST TEST TEST Любовь к Зеркалу Напоминание", // Subject line
+                            text: text
+
+                        };
+
+                        transporter.sendMail(mailOptions2, (error, info) => {
+                            if (error) {
+                                return console.log(error);
+                            }
+                            console.log('reminder email %s sent: %s', info.messageId, info.response);
+                        });
+                    }
+                    if((order.phonenum).length>9) {
+                        const from = 'Ljuboj K Zerkalu Bot';
+                        const to = order.phonenum;
+                        const textsms = 'Dorogaja(oj) ' + order.CustomerName + '\nVi zakazali ' + name + ', \ndata ' + order.deliveryDate + '(mesats/denj/god), chto budet cherez 3 chasa\nTsena ' + price + "€\nEsli hotite otmenitj to perejdite po ssilke: \n" + link;
+                        console.log("***********\nsending reminder SMS to " + order.phonenum + "\n" + link);
+                        //nexmo.message.sendSms(from, to, textsms);
+                    }
+
+            }
+
+        }
+
+
+
+    }).catch((err)=>{
+        console.log(err);
+    })
+}
+
+setInterval(reminder,10800000);

@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="css/jquery-ui.css">
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!--
     <link rel="stylesheet" href="css/jquery.datetimepicker.min.css">
     <script src="js/jquery.datetimepicker.full.js"></script>
@@ -78,7 +79,17 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        input[type=range] {
+            box-sizing: border-box;
 
+            line-height: 1;
+            height: 2em;
+            background-color: transparent;
+            cursor: pointer;
+            width:100%;
+        }
+    </style>
     <style>
         @keyframes slide-up {
             0% {
@@ -142,7 +153,9 @@
     <div style="height:100px"></div>
     <div class="site-section">
         <div class="container">
+            <p id="bla" class="text-black col-md-7" style="text-align: center">Закажите сейчас, но платите <b>после!</b></p>
             <div class="row">
+
                 <div class="col-md-7">
 
                     <form onSubmit = "return (validateForm());" action="/order" method="post" name = "myForm" id="theform" >
@@ -192,6 +205,7 @@
 
                 <div class="col-md-5 ml-auto">
                     <img id="im"  alt="image" style="position: sticky" >
+                    <p id="rating" class="text-black" style="text-align: center">rating </p>
                 </div>
 
                     <h4 class="text-black" style="margin-left:1.5%">Описание</h4>
@@ -216,6 +230,10 @@
                         <div class="form-group">
                             <label for="cName" class="text-black">Имя</label>
                             <input type="text" name="CustomerName" class="form-control" id="cName" placeholder="" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mark" class="text-black" id="onchange">Оценка</label><br>
+                            <input type="range" class="custom-range" name="mark" id="mark" step=0.5 min="0" max="5" onchange="changed();">
                         </div>
                         <div class="form-group">
                             <label for="text" class="text-black">Комментарий</label>
@@ -244,7 +262,12 @@
     <h2 id="theh2" style = "text-align: center; top: 50%;color: #0b0b0b"><b id="3" >закать + имя </b></h2>
     <h3 style = "font-size: 13pt; text-align: right; top: 50%;color: #0b0b0b"><i id="4" >по цене + цена </i></h3>
 </div>
-
+<script>
+    function changed(){
+        var value=document.getElementById("mark").value;
+        document.getElementById("onchange").innerHTML="Оценка <b>"+value + "</b>";
+    }
+</script>
 
 
 <!--comments + time -->
@@ -262,32 +285,36 @@
     document.getElementById("desc").innerText=service.desc;
 
     var box= document.getElementById("box");
-
+    var sumOfMarks=0;
     for(var c=comments.length-1;c>-1;c--){
-        var h5 = document.createElement("h5");
-        var style3 = document.createAttribute("style");
-        style3.value="color: #b21f2d";
-        h5.setAttributeNode(style3);
-        h5.classList.add("text-black");
-        h5.innerHTML=comments[c].CustomerName+"&ensp;";
+        if(comments[c].text!="" && comments[c].text!=null) {
+            var h5 = document.createElement("h5");
+            var style3 = document.createAttribute("style");
+            style3.value = "color: #b21f2d";
+            h5.setAttributeNode(style3);
+            h5.classList.add("text-black");
+            h5.innerHTML = comments[c].CustomerName + "&ensp;";
 
-        var span = document.createElement("span");
-        span.classList.add("text-black");
-        var style = document.createAttribute("style");
-        style.value="font-size: 10pt;";
-        span.setAttributeNode(style);
-        span.innerText=comments[c].date;
-        h5.appendChild(span);
-        box.appendChild(h5);
+            var span = document.createElement("span");
+            span.classList.add("text-black");
+            var style = document.createAttribute("style");
+            style.value = "font-size: 10pt;";
+            span.setAttributeNode(style);
+            span.innerText = comments[c].date;
+            h5.appendChild(span);
+            box.appendChild(h5);
 
-        var p = document.createElement("p");
-        p.classList.add("text-black");
-        var style2 = document.createAttribute("style");
-        style2.value="word-wrap:break-word;font-size: 13pt;";
-        p.setAttributeNode(style2);
-        p.innerHTML="&ensp;&ensp;"+comments[c].text;
-        box.appendChild(p);
+            var p = document.createElement("p");
+            p.classList.add("text-black");
+            var style2 = document.createAttribute("style");
+            style2.value = "word-wrap:break-word;font-size: 13pt;";
+            p.setAttributeNode(style2);
+            p.innerHTML = "&ensp;&ensp;" + comments[c].text;
+            box.appendChild(p);
+            sumOfMarks+=comments[c].mark;
+        }
     }
+    document.getElementById("rating").innerHTML="Средняя оценка " + (sumOfMarks/comments.length).toFixed(1);
    /* for(c of comments){
         var h5 = document.createElement("h5");
         var style3 = document.createAttribute("style");

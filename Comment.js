@@ -12,8 +12,12 @@ mongoose.model("Comment",{
         type: String,
         required: true
     },
+    mark:{
+        type: Number,
+        required: false
+    },
     text:{
         type: String,
-        required: true
+        required: false
     }
 });
