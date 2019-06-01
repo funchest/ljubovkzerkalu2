@@ -496,32 +496,35 @@ var curday = function(sp){
 function reminder() {
     Order.find().lean().then((orders)=> {
         orders = JSON.stringify(orders);
+        orders=JSON.parse(orders);
         var curdate=curday("/");
         var curDay=parseInt(curdate.substr(3,2));
         var curmon=parseInt(curdate.substr(0,2));
         var curyear= parseInt(curdate.substr(6,4));
         var curhour=parseInt(curdate.substr(11,2));
 
-        for(order of orders){
-            var deliverydate=order.deliveryDate;
+
+        for(o of orders){
+            var deliverydate=o.deliveryDate;
+
             var deliveryday=parseInt(deliverydate.substr(3,2));
             var deliverymon=parseInt(deliverydate.substr(0,2));
             var deliveryyear=parseInt( deliverydate.substr(6,4));
             var deliveryhour=parseInt(deliverydate.substr(11,2));
 
-            var ordinitdate=order.initialDate;
+            var ordinitdate=o.initialDate;
             var ordinitday=parseInt(ordinitdate.substr(3,2));
             var ordinitmon=parseInt(ordinitdate.substr(0,2));
             //eсли равны дни , заказ был сделан более чем 2 дня назад и до деливери осталось 3 часа
             if(deliveryyear==curyear && ( (deliverymon - ordinitmon)*30 + curDay)-( (deliverymon - ordinitmon)*30 + deliveryday ) == 0 && ( (deliverymon - ordinitmon)*30 + curDay)-( (deliverymon - ordinitmon)*30 + ordinitday ) > 2  && deliveryhour -  curhour < 5){
 
-                var link = "https://ljubovkzerkalu.herokuapp.com/orders/" + order.id;
+                var link = "https://ljubovkzerkalu.herokuapp.com/orders/" + o.id;
 
-                    var text = "Дорогая(ой) " + order.CustomerName + "\nСпасибо что выбрали наш салон красоты\nВы заказали " + name + ", дата " + order.deliveryDate + "(мес/день/год), что будет менее чем через 3 часа\nЕсли вдруг передумали то перейдите по ссылке: " + link;
-                    if((order.email).includes("@")){
+                    var text = "Дорогая(ой) " + o.CustomerName + "\nСпасибо что выбрали наш салон красоты\nВы заказали " + name + ", дата " + o.deliveryDate + "(мес/день/год), что будет менее чем через 3 часа\nЕсли вдруг передумали то перейдите по ссылке: " + link;
+                    if((o.email).includes("@")){
                         let mailOptions2 = {
                             from: 'aleksndr.fomitsjov@gmail.com', // sender address
-                            to: order.email, // list of receivers
+                            to: o.email, // list of receivers
                             subject: "TEST TEST TEST TEST Любовь к Зеркалу Напоминание", // Subject line
                             text: text
 
@@ -534,11 +537,11 @@ function reminder() {
                             console.log('reminder email %s sent: %s', info.messageId, info.response);
                         });
                     }
-                    if((order.phonenum).length>9) {
+                    if((o.phonenum).length>9) {
                         const from = 'Ljuboj K Zerkalu Bot';
-                        const to = order.phonenum;
-                        const textsms = 'Dorogaja(oj) ' + order.CustomerName + '\nVi zakazali ' + name + ', \ndata ' + order.deliveryDate + '(mesats/denj/god), chto budet cherez 3 chasa\nTsena ' + price + "€\nEsli hotite otmenitj to perejdite po ssilke: \n" + link;
-                        console.log("***********\nsending reminder SMS to " + order.phonenum + "\n" + link);
+                        const to = o.phonenum;
+                        const textsms = 'Dorogaja(oj) ' + o.CustomerName + '\nVi zakazali ' + name + ', \ndata ' + o.deliveryDate + '(mesats/denj/god), chto budet cherez 3 chasa\nTsena ' + price + "€\nEsli hotite otmenitj to perejdite po ssilke: \n" + link;
+                        console.log("***********\nsending reminder SMS to " + o.phonenum + "\n" + link);
                         //nexmo.message.sendSms(from, to, textsms);
                     }
 
@@ -552,5 +555,5 @@ function reminder() {
         console.log(err);
     })
 }
-
+//10800000 -  3 hours
 setInterval(reminder,10800000);
