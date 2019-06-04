@@ -516,12 +516,17 @@ function reminder() {
             var ordinitday=parseInt(ordinitdate.substr(3,2));
             var ordinitmon=parseInt(ordinitdate.substr(0,2));
             //eсли равны дни , заказ был сделан более чем 2 дня назад и до деливери осталось 3 часа
-            if(deliveryyear==curyear && ( (deliverymon - ordinitmon)*30 + curDay)-( (deliverymon - ordinitmon)*30 + deliveryday ) == 0 && ( (deliverymon - ordinitmon)*30 + curDay)-( (deliverymon - ordinitmon)*30 + ordinitday ) > 2  && deliveryhour -  curhour < 5){
+            if(deliveryyear==curyear && deliverymon==curmon && deliveryday==curDay && curhour+5>=deliveryhour)
+            {
 
-                var link = "https://ljubovkzerkalu.herokuapp.com/orders/" + o.id;
+                var init=30*ordinitmon+ordinitday,
+                    deliv=30*deliverymon+deliveryday;
+
+                if(deliv-init>=2) {
+                    var link = "https://ljubovkzerkalu.herokuapp.com/orders/" + o.id;
 
                     var text = "Дорогая(ой) " + o.CustomerName + "\nСпасибо что выбрали наш салон красоты\nВы заказали " + name + ", дата " + o.deliveryDate + "(мес/день/год), что будет менее чем через 3 часа\nЕсли вдруг передумали то перейдите по ссылке: " + link;
-                    if((o.email).includes("@")){
+                    if ((o.email).includes("@")) {
                         let mailOptions2 = {
                             from: 'aleksndr.fomitsjov@gmail.com', // sender address
                             to: o.email, // list of receivers
@@ -537,13 +542,14 @@ function reminder() {
                             console.log('reminder email %s sent: %s', info.messageId, info.response);
                         });
                     }
-                    if((o.phonenum).length>9) {
+                    if ((o.phonenum).length > 9) {
                         const from = 'Ljuboj K Zerkalu Bot';
                         const to = o.phonenum;
                         const textsms = 'Dorogaja(oj) ' + o.CustomerName + '\nVi zakazali ' + name + ', \ndata ' + o.deliveryDate + '(mesats/denj/god), chto budet cherez 3 chasa\nTsena ' + price + "€\nEsli hotite otmenitj to perejdite po ssilke: \n" + link;
                         console.log("***********\nsending reminder SMS to " + o.phonenum + "\n" + link);
                         //nexmo.message.sendSms(from, to, textsms);
                     }
+                }
 
             }
 
